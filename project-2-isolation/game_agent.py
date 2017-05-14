@@ -374,8 +374,54 @@ class AlphaBetaPlayer(IsolationPlayer):
                 each helper function or else your agent will timeout during
                 testing.
         """
+
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise SearchTimeout()
+        # Set max value to the smallest possible value
+        best_value = float("-inf")
+        # returns value if no legal moves exist
+        best_move = (-1, -1)
+        # Iterate over all possible candidate moves
+        for cand_move in game.get_legal_moves():
+            # Obtain copy of game.
+            cand_game = game.forecast_move(cand_move)
+            cand_value = self.min_value(cand_game, depth-1, alpha, beta)
+            # Update best_move and max_value if cand_value has max value
+            if cand_value > best_value:
+                best_move, best_value = cand_move, cand_value
+            if best_value >= beta:
+                break
+            alpha = max(alpha, best_value)
+        return best_move
+
+    def max_value(self, game, depth, alpha, beta):
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
 
-        # TODO: finish this function!
-        raise NotImplementedError
+        if depth == 0:
+            return self.score(game, self)
+
+        value = float("-inf")
+
+        for move in game.get_legal_moves():
+            value = max(value, self.min_value(game.forecast_move(move), depth-1, alpha, beta))
+            alpha = max(alpha, value)
+            if value >= beta:
+                return value
+        return value
+
+    def min_value(self, game, depth, alpha, beta):
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise SearchTimeout()
+
+        if depth == 0:
+            return self.score(game, self)
+
+        value = float("inf")
+
+        for move in game.get_legal_moves():
+            value = min(value, self.max_value(game.forecast_move(move), depth-1, alpha, beta))
+            if value <= alpha:
+                return value # return value
+            beta = min(beta, value)
+        return value
