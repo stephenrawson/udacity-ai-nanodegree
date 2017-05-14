@@ -326,8 +326,23 @@ class AlphaBetaPlayer(IsolationPlayer):
         """
         self.time_left = time_left
 
-        # TODO: finish this function!
-        raise NotImplementedError
+        # Initialize the best move so that this function returns something
+        # in case the search fails due to timeout
+        best_move = (-1, -1)
+
+        try:
+            # The try/except block will automatically catch the exception
+            # raised when the timer is about to expire.
+            for depth in range(1, len(game.get_blank_spaces())):
+                best_move = self.alphabeta(game, depth)
+                if best_move == (-1, -1): # Found game end
+                    break
+
+        except SearchTimeout:
+            return best_move  # Handle any actions required after timeout as needed
+
+        # Return the best move from the last completed search iteration
+        return best_move
 
     def alphabeta(self, game, depth, alpha=float("-inf"), beta=float("inf")):
         """Implement depth-limited minimax search with alpha-beta pruning as
@@ -374,7 +389,6 @@ class AlphaBetaPlayer(IsolationPlayer):
                 each helper function or else your agent will timeout during
                 testing.
         """
-
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
         # Set max value to the smallest possible value
@@ -389,12 +403,36 @@ class AlphaBetaPlayer(IsolationPlayer):
             # Update best_move and max_value if cand_value has max value
             if cand_value > best_value:
                 best_move, best_value = cand_move, cand_value
+            # Best move found.
             if best_value >= beta:
                 break
+            # Update lower bound for pruning
             alpha = max(alpha, best_value)
         return best_move
 
     def max_value(self, game, depth, alpha, beta):
+        """Return max value move of candidate game state.
+        Parameters
+        ----------
+        game : isolation.Board
+            An instance of the Isolation game `Board` class representing the
+            current game state
+
+        depth : int
+            Depth is an integer representing the maximum number of plies to
+            search in the game tree before aborting
+
+        alpha : float
+            Alpha limits the lower bound of search on minimizing layers
+
+        beta : float
+            Beta limits the upper bound of search on maximizing layers
+
+        Returns
+        -------
+        int
+            The max value move of candidate game state
+        """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
 
@@ -405,12 +443,35 @@ class AlphaBetaPlayer(IsolationPlayer):
 
         for move in game.get_legal_moves():
             value = max(value, self.min_value(game.forecast_move(move), depth-1, alpha, beta))
+            # Update lower bound
             alpha = max(alpha, value)
             if value >= beta:
-                return value
+                return value # Found candidate upper value
         return value
 
     def min_value(self, game, depth, alpha, beta):
+        """Return minimum value move of candidate game state.
+        Parameters
+        ----------
+        game : isolation.Board
+            An instance of the Isolation game `Board` class representing the
+            current game state
+
+        depth : int
+            Depth is an integer representing the maximum number of plies to
+            search in the game tree before aborting
+
+        alpha : float
+            Alpha limits the lower bound of search on minimizing layers
+
+        beta : float
+            Beta limits the upper bound of search on maximizing layers
+
+        Returns
+        -------
+        int
+            The minimum value move of candidate game state
+        """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
 
@@ -422,6 +483,7 @@ class AlphaBetaPlayer(IsolationPlayer):
         for move in game.get_legal_moves():
             value = min(value, self.max_value(game.forecast_move(move), depth-1, alpha, beta))
             if value <= alpha:
-                return value # return value
+                return value # Found candidate lower value
+            # Update upper bound
             beta = min(beta, value)
         return value
