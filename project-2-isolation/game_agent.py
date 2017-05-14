@@ -213,8 +213,6 @@ class MinimaxPlayer(IsolationPlayer):
 
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
-
-        ##### THIS WORKS !!!!!!
         # Set max value to the smallest possible value
         max_value = float("-inf")
         # returns value if no legal moves exist
@@ -230,32 +228,63 @@ class MinimaxPlayer(IsolationPlayer):
         return best_move
 
     def max_value(self, game, depth):
-        """Helper Function that returns the MAX-Value.
+        """Helper function to minimax that returns the highest value from every
+        possible response from the min_value function.  Contigent upon depth.
+
+        Parameters
+        ----------
+        game : isolation.Board
+            An instance of the Isolation game 'Board' class representing the
+            current candidate game state
+
+        depth : int
+            Depth is an integer representing the maximum number of plies to
+            search in the game tree before aborting
+
+        Returns
+        -------
+        int
+            The maximum score value for the input candidate game state
         """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
-
         if depth == 0:
+            # Return Leaf node score
             return self.score(game, self)
-
         value = float("-inf")
         for move in game.get_legal_moves(game.active_player):
+            # Set value equal to the maximum min_value
             value = max(value, self.min_value(game.forecast_move(move), depth-1))
         return value
 
 
     def min_value(self, game, depth):
-        """Helper Function that returns the Min_Value
+        """Helper function to minimax that returns the lowest value from every
+        possible response from the max_value function.  Contigent upon depth.
 
+        Parameters
+        ----------
+        game : isolation.Board
+            An instance of the Isolation game 'Board' class representing the
+            current candidate game state
+
+        depth : int
+            Depth is an integer representing the maximum number of plies to
+            search in the game tree before aborting
+
+        Returns
+        -------
+        int
+            The minimum score value for the input candidate game state
         """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
-
         if depth == 0:
+            # Return leaf node score
             return self.score(game, self)
-
         value = float("inf")
         for move in game.get_legal_moves(game.active_player):
+            # Set value equal to the minimum max_value
             value = min(value, self.max_value(game.forecast_move(move), depth-1))
         return value
 
