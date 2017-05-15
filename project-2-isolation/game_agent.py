@@ -35,8 +35,16 @@ def custom_score(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    # Precentage of legal moves to total back spaces * 2
+    own_moves = len(game.get_legal_moves(player)) / len(game.get_blank_spaces())
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player))) * 2
+    return float((own_moves * 2) - opp_moves)
 
 
 def custom_score_2(game, player):
@@ -61,9 +69,17 @@ def custom_score_2(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    if game.is_loser(player):
+        return float("-inf")
 
+    if game.is_winner(player):
+        return float("inf")
+
+    # Our Oponents moves weight more ours. last one had .1 and .9
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+
+    return float((own_moves * .05) - (opp_moves * .95))
 
 def custom_score_3(game, player):
     """Calculate the heuristic value of a game state from the point of view
@@ -87,8 +103,16 @@ def custom_score_3(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    # Our oppenents weight is greater than ours
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player))) * 2
+    return float(own_moves - (opp_moves * 1.5))
 
 
 class IsolationPlayer:
@@ -217,6 +241,11 @@ class MinimaxPlayer(IsolationPlayer):
         max_value = float("-inf")
         # returns value if no legal moves exist
         best_move = (-1, -1)
+        if len(game.get_legal_moves(self)) >= 1:
+            legal_moves = game.get_legal_moves(self)
+            best_move = legal_moves[0]
+        else:
+            return best_move
         # Iterate over all possible candidate moves
         for cand_move in game.get_legal_moves(self):
             # Obtain copy of game.
@@ -329,14 +358,24 @@ class AlphaBetaPlayer(IsolationPlayer):
         # Initialize the best move so that this function returns something
         # in case the search fails due to timeout
         best_move = (-1, -1)
+        if len(game.get_legal_moves()) >= 1:
+            legal_moves = game.get_legal_moves()
+            best_move = legal_moves[0]
+        else:
+            return best_move
 
         try:
             # The try/except block will automatically catch the exception
             # raised when the timer is about to expire.
             for depth in range(1, len(game.get_blank_spaces())):
-                best_move = self.alphabeta(game, depth)
-                if best_move == (-1, -1): # Found game end
-                    break
+            #for depth in range(1, 99999):
+                new_move = self.alphabeta(game, depth)
+                # Reached end game
+                if new_move == ():
+                    return best_move
+                else:
+                    # Update best_move with next deepest iteration
+                    best_move = new_move
 
         except SearchTimeout:
             return best_move  # Handle any actions required after timeout as needed
@@ -393,8 +432,8 @@ class AlphaBetaPlayer(IsolationPlayer):
             raise SearchTimeout()
         # Set max value to the smallest possible value
         best_value = float("-inf")
-        # returns value if no legal moves exist
-        best_move = (-1, -1)
+        # returns empty move if no legal moves exist
+        best_move = ()
         # Iterate over all possible candidate moves
         for cand_move in game.get_legal_moves():
             # Obtain copy of game.
