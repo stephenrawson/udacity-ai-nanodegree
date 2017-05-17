@@ -43,8 +43,8 @@ def custom_score(game, player):
 
     # Precentage of legal moves to total back spaces * 2
     own_moves = len(game.get_legal_moves(player)) / len(game.get_blank_spaces())
-    opp_moves = len(game.get_legal_moves(game.get_opponent(player))) * 2
-    return float((own_moves * 2) - opp_moves)
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player))) / len(game.get_blank_spaces())
+    return float(own_moves - (opp_moves * 2))
 
 
 def custom_score_2(game, player):
@@ -75,7 +75,7 @@ def custom_score_2(game, player):
     if game.is_winner(player):
         return float("inf")
 
-    # Our Oponents moves weight more ours. last one had .1 and .9
+    # Our Oponents moves weigh morethan ours. last one had .1 and .9
     own_moves = len(game.get_legal_moves(player))
     opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
 
