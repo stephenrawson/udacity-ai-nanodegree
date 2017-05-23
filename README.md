@@ -1,12 +1,41 @@
 # Udacity Artifical-Intelligence Nanodegree (Term 1)  
 (April 2017 - Present)
 
-Medium article and README.md are under construction....
+Medium article and README.md are under construction....  
 
-
-### Topics  
-
+## Topics  
+* Sudoku Solver
+* Game Tree
 * Constraint Progragation
 * Iterative Deepening Search
 * Alpha-beta pruning
 * Minimax algorithm
+* Breadth-First Search  
+* Uniform-Cost Search  
+* Depth-First Search  
+* A* Search
+* Simulated Annealing 
+* N-Queens Problem
+* Traveling Salesman Problem
+
+## Projects  
+Project 1 - [Diagonal Soduku Solver][1]  
+Project 2 - [Building a Game-playing Agent][2]  
+![Example game of Isolation](/project-2-isolation/viz.gif)
+
+## Labs
+Lab: [Teaching Pac-Man to Search][3]  
+![Example Pacman](pacman.gif)  
+Lab: [Simulated Annealing][4]  
+![Example Simulated Annealing](/lab-2-simulated-annealing/SA_animation.gif)
+
+### Refernces
+1.  Python implementation of algorithms from Russell and Norvig's ["Artificial Intelligence - A Modern Approach"][5]
+
+
+[//]: # (Links Section)
+[1]:https://github.com/udacity/AIND-Sudoku
+[2]:https://github.com/udacity/AIND-Isolation
+[3]:http://inst.eecs.berkeley.edu/~cs188/pacman/project_overview.html
+[4]:https://github.com/udacity/AIND-Simulated_Annealing
+[5]:https://github.com/aimacode/aima-python  
