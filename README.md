@@ -16,21 +16,24 @@ Medium article and README.md are under construction....
 * A* Search
 * Simulated Annealing 
 * N-Queens Problem
-* Traveling Salesman Problem
+* Traveling Salesman Problem  
+* Constraint Satisfaction
+* Backtracking-Search  
+
 
 ## Projects  
 Project 1 - [Diagonal Soduku Solver][1]  
 Project 2 - [Building a Game-playing Agent][2]  
 ![Example game of Isolation](/project-2-isolation/viz.gif)
 
-## Labs
-Lab: [Teaching Pac-Man to Search][3]  
-![Example Pacman](pacman.gif)  
-Lab: [Simulated Annealing][4]  
-![Example Simulated Annealing](/lab-2-simulated-annealing/SA_animation.gif)
+## Labs  
+1. [Teaching Pac-Man to Search][3]   
+2. [Simulated Annealing][4]  
+3. [Constraint Satisfaction Problems & Sympy Intro][6]  
 
 ### Refernces
 1.  Python implementation of algorithms from Russell and Norvig's ["Artificial Intelligence - A Modern Approach"][5]
+2.  [SymPy][7] is a Python Library for symbolic mathematics.     
 
 
 [//]: # (Links Section)
@@ -39,3 +42,5 @@ Lab: [Simulated Annealing][4]
 [3]:http://inst.eecs.berkeley.edu/~cs188/pacman/project_overview.html
 [4]:https://github.com/udacity/AIND-Simulated_Annealing
 [5]:https://github.com/aimacode/aima-python  
+[6]:https://github.com/udacity/AIND-Constraint_Satisfaction
+[7]:http://docs.sympy.org/latest/tutorial/intro.html
