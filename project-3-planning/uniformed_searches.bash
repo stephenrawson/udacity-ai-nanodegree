@@ -24,7 +24,7 @@ Search Algorithms
 Starting Searches...
 "
 
-for problem in 1 2 3
+for problem in 1 2 3 
 do
     for test in 1 2 3 4 5 6 7
     do

@@ -217,7 +217,6 @@ class AirCargoProblem(Problem):
         conditions by ignoring the preconditions required for an action to be
         executed.
         """
-        # TODO implement (see Russell-Norvig Ed-3 10.2.3  or Russell-Norvig Ed-2 11.2)
         count = 0
         kb = PropKB()
         kb.tell(decode_state(node.state, self.state_map).pos_sentence())
@@ -275,25 +274,25 @@ def air_cargo_p2() -> AirCargoProblem:
            expr('At(C3, ATL)'),
            expr('At(P1, SFO)'),
            expr('At(P2, JFK)'),
-           expr('At(P3, ATL)'),
+           expr('At(P3, ATL)')
           ]
     neg = [expr('At(C1, ATL)'),
            expr('At(C1, JFK)'),
-           expr('At(C1, P1)'),
-           expr('At(C1, P2)'),
-           expr('At(C1, P3)'),
+           expr('In(C1, P1)'),
+           expr('In(C1, P2)'),
+           expr('In(C1, P3)'),
            #C2
            expr('At(C2, ATL)'),
            expr('At(C2, SFO)'),
-           expr('At(C2, P1)'),
-           expr('At(C2, P2)'),
-           expr('At(C2, P3)'),
+           expr('In(C2, P1)'),
+           expr('In(C2, P2)'),
+           expr('In(C2, P3)'),
            #C3
            expr('At(C3, JFK)'),
            expr('At(C3, SFO)'),
-           expr('At(C3, P1)'),
-           expr('At(C3, P2)'),
-           expr('At(C3, P3)'),
+           expr('In(C3, P1)'),
+           expr('In(C3, P2)'),
+           expr('In(C3, P3)'),
            #P1
            expr('At(P1, ATL)'),
            expr('At(P1, JFK)'),
@@ -302,15 +301,14 @@ def air_cargo_p2() -> AirCargoProblem:
            expr('At(P2, SFO)'),
            #P3
            expr('At(P3, JFK)'),
-           expr('At(P3, SFO)'),
+           expr('At(P3, SFO)')
           ]
     init = FluentState(pos, neg)
     goal = [expr('At(C1, JFK)'),
             expr('At(C2, SFO)'),
-            expr('At(C2, SFO)'),
+            expr('At(C3, SFO)')
            ]
     return AirCargoProblem(cargos, planes, airports, init, goal)
-
 
 def air_cargo_p3() -> AirCargoProblem:
     """
@@ -321,8 +319,8 @@ def air_cargo_p3() -> AirCargoProblem:
 	∧ Airport(JFK) ∧ Airport(SFO) ∧ Airport(ATL) ∧ Airport(ORD))
     Goal(At(C1, JFK) ∧ At(C3, JFK) ∧ At(C2, SFO) ∧ At(C4, SFO))
     """
-    cargos = ['C{}'.format(i+1) for i in range(3)]
-    planes = ['P{}'.format(i+1) for i in range(3)]
+    cargos = ['C1', 'C2', 'C3', 'C4']
+    planes = ['P1', 'P2']
     airports = ['ATL', 'JFK', 'ORD', 'SFO']
     pos = [expr('At(C1, SFO)'),
            expr('At(C2, JFK)'),
