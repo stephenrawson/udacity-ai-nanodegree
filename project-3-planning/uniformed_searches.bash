@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Running uninformed planning seraches
+echo "Running uninformed planning searches
 
 Problems
 -----------------
