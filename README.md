@@ -19,12 +19,17 @@ Medium article and README.md are under construction....
 * Traveling Salesman Problem  
 * Constraint Satisfaction
 * Backtracking-Search  
+* Planning Search
+* Situation Calculus
+* Progression Search
 
 
 ## Projects  
 Project 1 - [Diagonal Soduku Solver][1]  
 Project 2 - [Building a Game-playing Agent][2]  
-![Example game of Isolation](/project-2-isolation/viz.gif)
+![Example game of Isolation](/project-2-isolation/viz.gif)  
+Project 3 - [Implement a Planning Search][8]  
+![Picture](/project-3-planning/images/Progression.PNG)  
 
 ## Labs  
 1. [Teaching Pac-Man to Search][3]   
@@ -44,3 +49,4 @@ Project 2 - [Building a Game-playing Agent][2]
 [5]:https://github.com/aimacode/aima-python  
 [6]:https://github.com/udacity/AIND-Constraint_Satisfaction
 [7]:http://docs.sympy.org/latest/tutorial/intro.html
+[8]:https://github.com/udacity/AIND-Planning
